@@ -4,7 +4,7 @@
 public class Coach
 {
     public string CoachName;
-    public Coach Next;
+    public Coach? Next;   // Nullable because the last node points to null
 
     public Coach(string coachName)
     {
@@ -16,7 +16,7 @@ public class Coach
 // Linked List
 public class Train
 {
-    private Coach head;
+    private Coach? head;   // Nullable because the list is initially empty
 
     public void AddCoach(string coachName)
     {
@@ -40,7 +40,7 @@ public class Train
 
     public void DisplayTrain()
     {
-        Coach temp = head;
+        Coach? temp = head;
 
         Console.WriteLine("Train Coaches:");
 
@@ -49,7 +49,9 @@ public class Train
             Console.Write(temp.CoachName);
 
             if (temp.Next != null)
+            {
                 Console.Write(" -> ");
+            }
 
             temp = temp.Next;
         }
@@ -65,11 +67,8 @@ class Program
         Train train = new Train();
 
         train.AddCoach("Engine");
-
         train.AddCoach("Coach A");
-
         train.AddCoach("Coach B");
-
         train.AddCoach("Coach C");
 
         train.DisplayTrain();
