@@ -5,30 +5,42 @@ import {
   OnDestroy,
   SimpleChanges
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CourseCard } from '../../components/course-card/course-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, CourseCard],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CourseCard
+  ],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit, OnChanges, OnDestroy {
 
+  // ---------------------------
+  // Portal Information
+  // ---------------------------
+
   portalName = 'Student Course Portal';
 
-  isPortalActive = true;
+  today = new Date();
 
   message = '';
 
   searchTerm = '';
 
-  today = new Date();
+  isPortalActive = true;
 
   selectedCourse = 'Angular Fundamentals';
+
+  // ---------------------------
+  // Course List
+  // ---------------------------
 
   courses = [
     {
@@ -54,27 +66,84 @@ export class Home implements OnInit, OnChanges, OnDestroy {
     }
   ];
 
+  // ---------------------------
+  // Template Driven Form
+  // ---------------------------
+
+  studentName = '';
+
+  studentEmail = '';
+
+  courseId = '';
+
+  agreeToTerms = false;
+
+  submitted = false;
+
+  // ---------------------------
+  // Constructor
+  // ---------------------------
+
   constructor() {
     console.log('Constructor');
   }
 
-  ngOnInit() {
+  // ---------------------------
+  // Lifecycle Hooks
+  // ---------------------------
+
+  ngOnInit(): void {
     console.log('ngOnInit');
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
   }
 
-  ngOnDestroy() {
-    console.log('Destroyed');
+  ngOnDestroy(): void {
+    console.log('Component Destroyed');
   }
 
-  onEnrollClick() {
+  // ---------------------------
+  // Existing Methods
+  // ---------------------------
+
+  onEnrollClick(): void {
     this.message = 'Enrollment opened!';
   }
 
-  onCourseEnroll() {
+  onCourseEnroll(): void {
     alert('Successfully enrolled!');
   }
+
+  // ---------------------------
+  // Template Driven Form Submit
+  // ---------------------------
+
+  onSubmit(form: NgForm): void {
+
+    console.log('Form Value');
+
+    console.log(form.value);
+
+    console.log('Form Valid');
+
+    console.log(form.valid);
+
+    this.submitted = true;
+
+  }
+
+  // ---------------------------
+  // Reset Form
+  // ---------------------------
+
+  resetForm(form: NgForm): void {
+
+    form.resetForm();
+
+    this.submitted = false;
+
+  }
+
 }

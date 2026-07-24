@@ -1,10 +1,21 @@
 <h1>{{ portalName }}</h1>
 
-<p>Manage your courses, enrollments and student profile.</p>
+<hr>
+
+<h2>{{ today | date:'fullDate' }}</h2>
+
+<hr>
+
+<input
+  type="text"
+  placeholder="Search Courses"
+  [(ngModel)]="searchTerm">
+
+<p>Searching for: {{ searchTerm }}</p>
 
 <button
-  [disabled]="!isPortalActive"
-  (click)="onEnrollClick()">
+  (click)="onEnrollClick()"
+  [disabled]="!isPortalActive">
   Enroll Now
 </button>
 
@@ -12,57 +23,180 @@
 
 <hr>
 
-<label>Search Course:</label>
-
-<input
-  type="text"
-  [(ngModel)]="searchTerm"
-  placeholder="Enter course name">
-
-<p>Searching for: {{ searchTerm }}</p>
-
-<hr>
-
-<app-course-card
-  [courseName]="selectedCourse"
-  (enroll)="onCourseEnroll()">
-</app-course-card><h1>{{ portalName }}</h1>
-
-<hr>
-
-<h2>Today's Date</h2>
-
-<p>{{ today | date:'fullDate' }}</p>
-
-<hr>
-
-<h2>Course List</h2>
+<h2>Available Courses</h2>
 
 <div *ngFor="let course of courses">
 
-    <h3>{{ course.name | uppercase }}</h3>
+  <h3>{{ course.name | uppercase }}</h3>
 
-    <p>Credits : {{ course.credits }}</p>
+  <p>Credits : {{ course.credits }}</p>
 
-    <p>Fee : {{ course.fee | currency:'INR' }}</p>
+  <p>Fee : {{ course.fee | currency:'INR' }}</p>
 
-    <p *ngIf="course.available; else closed">
+  <p *ngIf="course.available; else unavailable">
+    Available
+  </p>
 
-        Available
+  <ng-template #unavailable>
+    <p>Not Available</p>
+  </ng-template>
 
-    </p>
+  <app-course-card
+    [courseName]="course.name"
+    (enroll)="onCourseEnroll()">
+  </app-course-card>
 
-    <ng-template #closed>
+  <hr>
 
-        <p>Not Available</p>
+</div>
 
-    </ng-template>
+<h2>Course Enrollment Form</h2>
 
-    <app-course-card
-        [courseName]="course.name"
-        (enroll)="onCourseEnroll()">
-    </app-course-card>
+<form
+  #enrollForm="ngForm"
+  (ngSubmit)="onSubmit(enrollForm)">
 
-    <hr>
+  <!-- Student Name -->
+
+  <label>Student Name</label>
+
+  <br>
+
+  <input
+    type="text"
+    name="studentName"
+    required
+    minlength="3"
+    [(ngModel)]="studentName"
+    #nameCtrl="ngModel">
+
+  <br>
+
+  <span
+    *ngIf="nameCtrl.touched && nameCtrl.errors?.['required']">
+    Name is required
+  </span>
+
+  <br>
+
+  <span
+    *ngIf="nameCtrl.touched && nameCtrl.errors?.['minlength']">
+    Name must be at least 3 characters
+  </span>
+
+  <br><br>
+
+  <!-- Email -->
+
+  <label>Email</label>
+
+  <br>
+
+  <input
+    type="email"
+    name="studentEmail"
+    required
+    email
+    [(ngModel)]="studentEmail"
+    #emailCtrl="ngModel">
+
+  <br>
+
+  <span
+    *ngIf="emailCtrl.touched && emailCtrl.errors?.['required']">
+    Email is required
+  </span>
+
+  <br>
+
+  <span
+    *ngIf="emailCtrl.touched && emailCtrl.errors?.['email']">
+    Enter a valid email
+  </span>
+
+  <br><br>
+
+  <!-- Course -->
+
+  <label>Select Course</label>
+
+  <br>
+
+  <select
+    name="courseId"
+    required
+    [(ngModel)]="courseId"
+    #courseCtrl="ngModel">
+
+    <option value="">Select Course</option>
+
+    <option
+      *ngFor="let course of courses"
+      [value]="course.name">
+
+      {{ course.name }}
+
+    </option>
+
+  </select>
+
+  <br>
+
+  <span
+    *ngIf="courseCtrl.touched && courseCtrl.errors?.['required']">
+    Please select a course
+  </span>
+
+  <br><br>
+
+  <!-- Terms -->
+
+  <input
+    type="checkbox"
+    name="agreeToTerms"
+    required
+    [(ngModel)]="agreeToTerms"
+    #termsCtrl="ngModel">
+
+  I agree to Terms and Conditions
+
+  <br>
+
+  <span
+    *ngIf="termsCtrl.touched && termsCtrl.errors?.['required']">
+    Accept the terms to continue
+  </span>
+
+  <br><br>
+
+  <button
+    type="submit"
+    [disabled]="enrollForm.invalid">
+
+    Submit
+
+  </button>
+
+  &nbsp;
+
+  <button
+    type="button"
+    (click)="resetForm(enrollForm)">
+
+    Reset
+
+  </button>
+
+</form>
+
+<br>
+
+<div *ngIf="submitted">
+
+  <h3>
+
+    Enrollment request submitted successfully!
+
+  </h3>
 
 </div>
