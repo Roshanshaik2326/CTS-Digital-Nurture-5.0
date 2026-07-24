@@ -1,1 +1,20 @@
 <message>Hello from deepskilling and GitWork</message>
+# Git HOL 4 Notes
+
+## Merge Conflict
+
+A merge conflict occurs when two branches modify the same part of a file differently.
+
+## Resolution
+
+- Identify the conflict.
+- Edit the file manually.
+- Remove conflict markers.
+- Stage the file.
+- Commit the resolved merge.
+
+## Key Learning
+
+- Conflicts are resolved manually.
+- Git highlights conflicting sections.
+- After resolving, the merge must be committed.
