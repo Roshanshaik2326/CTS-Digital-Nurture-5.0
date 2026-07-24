@@ -1,1 +1,2 @@
 Hello from deepskilling branch
+This line was added in GitNewBranch.
