@@ -1,0 +1,64 @@
+h1 {
+  text-align: center;
+  color: #1976d2;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+
+label {
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  margin-bottom: 12px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+button {
+  padding: 8px 16px;
+  margin-top: 10px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 5px;
+  background-color: #1976d2;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background-color: #125ca1;
+}
+
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+div {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+hr {
+  margin: 20px 0;
+}
