@@ -14,7 +14,7 @@ export class CourseCard {
   @Output()
   enroll = new EventEmitter<void>();
 
-  enrollCourse(): void {
+  enrollCourse() {
     this.enroll.emit();
   }
 }

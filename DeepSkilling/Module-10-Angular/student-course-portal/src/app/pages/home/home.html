@@ -26,4 +26,43 @@
 <app-course-card
   [courseName]="selectedCourse"
   (enroll)="onCourseEnroll()">
-</app-course-card>
+</app-course-card><h1>{{ portalName }}</h1>
+
+<hr>
+
+<h2>Today's Date</h2>
+
+<p>{{ today | date:'fullDate' }}</p>
+
+<hr>
+
+<h2>Course List</h2>
+
+<div *ngFor="let course of courses">
+
+    <h3>{{ course.name | uppercase }}</h3>
+
+    <p>Credits : {{ course.credits }}</p>
+
+    <p>Fee : {{ course.fee | currency:'INR' }}</p>
+
+    <p *ngIf="course.available; else closed">
+
+        Available
+
+    </p>
+
+    <ng-template #closed>
+
+        <p>Not Available</p>
+
+    </ng-template>
+
+    <app-course-card
+        [courseName]="course.name"
+        (enroll)="onCourseEnroll()">
+    </app-course-card>
+
+    <hr>
+
+</div>
